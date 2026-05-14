@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
-import { MapPin, Phone, Clock, Facebook } from "lucide-react";
+import { MapPin, Phone, Clock } from "lucide-react";
 
 function FadeIn({
   children,
@@ -34,7 +34,6 @@ export default function ContactPage() {
     <>
       {/* Page hero */}
       <section className="relative pt-40 pb-20 overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#F5B800]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <FadeIn>
             <span className="flex items-center gap-3 mb-6">
@@ -132,7 +131,7 @@ export default function ContactPage() {
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 border border-white/10 text-white/50 hover:border-[#F5B800] hover:text-[#F5B800] px-4 py-3 text-sm transition-all duration-200"
                     >
-                      <Facebook size={16} />
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                       Facebook
                     </a>
                     <a

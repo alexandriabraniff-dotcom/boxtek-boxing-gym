@@ -9,13 +9,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Logo + tagline */}
           <div className="flex flex-col gap-4">
-            <Image
-              src="/logo.png"
-              alt="Boxtek Boxing Gym"
-              width={72}
-              height={72}
-              className="object-contain"
-            />
+            <div className="relative inline-block w-fit">
+              <div className="absolute inset-0 rounded-full border-2 border-[#F5B800]/60" />
+              <Image
+                src="/logo.png"
+                alt="Boxtek Boxing Gym"
+                width={72}
+                height={72}
+                className="w-16 h-16 object-contain rounded-full"
+              />
+            </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
               Adelaide&apos;s premier boxing gym. Train with purpose. Fight with heart.
             </p>
@@ -47,10 +50,9 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {[
                 { label: "Home", href: "/" },
-                { label: "About Us", href: "/about" },
-                { label: "Classes", href: "/classes" },
-                { label: "Membership", href: "/membership" },
-                { label: "Contact", href: "/contact" },
+                { label: "About", href: "/about" },
+                { label: "Classes / Memberships", href: "/training" },
+                { label: "Find Us", href: "/#find-us" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

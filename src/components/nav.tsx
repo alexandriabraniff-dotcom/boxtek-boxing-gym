@@ -5,15 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
-const leftLinks = [
-  { label: "Classes", href: "/classes" },
+const navLinks = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Schedule", href: "/#schedule" },
-];
-
-const rightLinks = [
-  { label: "Membership", href: "/membership" },
-  { label: "Contact", href: "/contact" },
+  { label: "Classes / Memberships", href: "/training" },
+  { label: "Find Us", href: "/#find-us" },
 ];
 
 export default function Nav() {
@@ -21,7 +17,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -29,55 +25,41 @@ export default function Nav() {
   return (
     <>
       <header
-        className={`fixed top-8 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
           scrolled
-            ? "bg-[#0A0A0A]/95 backdrop-blur-md border-b border-white/5 top-0"
-            : "bg-transparent"
+            ? "bg-[#0A0A0A]/98 backdrop-blur-md border-b border-[#F5B800]/20"
+            : "bg-[#0A0A0A]/30 backdrop-blur-sm"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Left nav links */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {leftLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-white/70 hover:text-[#F5B800] text-sm font-medium tracking-widest uppercase transition-colors duration-200"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between h-20 lg:h-24">
 
-            {/* Center logo */}
-            <Link href="/" className="flex-shrink-0 mx-auto lg:mx-0">
-              <Image
-                src="/logo.png"
-                alt="Boxtek Boxing Gym"
-                width={64}
-                height={64}
-                className="w-12 h-12 lg:w-16 lg:h-16 object-contain"
-              />
+            {/* Logo — left, circular with gold ring */}
+            <Link href="/" className="flex items-center gap-4 group shrink-0">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full border-2 border-[#F5B800] group-hover:border-[#FFD340] transition-colors duration-300" />
+                <Image
+                  src="/logo.png"
+                  alt="Boxtek Boxing Gym"
+                  width={72}
+                  height={72}
+                  className="w-16 h-16 lg:w-20 lg:h-20 object-contain rounded-full"
+                />
+              </div>
             </Link>
 
-            {/* Right nav links + CTA */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {rightLinks.map((link) => (
+            {/* Desktop nav — right side */}
+            <nav className="hidden lg:flex items-center gap-10">
+              {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-white/70 hover:text-[#F5B800] text-sm font-medium tracking-widest uppercase transition-colors duration-200"
+                  className="relative text-white/70 hover:text-white text-xs font-semibold tracking-[0.15em] uppercase transition-colors duration-200 group"
                 >
                   {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#F5B800] group-hover:w-full transition-all duration-300" />
                 </Link>
               ))}
-              <Link
-                href="/membership"
-                className="bg-[#F5B800] text-[#0A0A0A] text-sm font-bold tracking-widest uppercase px-5 py-2.5 hover:bg-[#FFD340] transition-colors duration-200"
-              >
-                Join Now
-              </Link>
             </nav>
 
             {/* Mobile hamburger */}
@@ -94,37 +76,35 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-[#0A0A0A] flex flex-col items-center justify-center gap-8">
+        <div className="fixed inset-0 z-40 bg-[#0A0A0A] flex flex-col items-center justify-center gap-10">
           <button
-            className="absolute top-6 right-6 text-white"
+            className="absolute top-6 right-6 text-white/60 hover:text-white"
             onClick={() => setOpen(false)}
           >
             <X size={28} />
           </button>
-          <Image
-            src="/logo.png"
-            alt="Boxtek Boxing Gym"
-            width={80}
-            height={80}
-            className="object-contain mb-4"
-          />
-          {[...leftLinks, ...rightLinks].map((link) => (
+          <div className="mb-4">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 rounded-full border-2 border-[#F5B800]" />
+              <Image
+                src="/logo.png"
+                alt="Boxtek Boxing Gym"
+                width={96}
+                height={96}
+                className="w-24 h-24 object-contain rounded-full"
+              />
+            </div>
+          </div>
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-heading text-4xl text-white hover:text-[#F5B800] tracking-wider transition-colors"
+              className="font-heading text-3xl text-white/80 hover:text-[#F5B800] tracking-widest uppercase transition-colors"
             >
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/membership"
-            onClick={() => setOpen(false)}
-            className="mt-4 bg-[#F5B800] text-[#0A0A0A] font-bold tracking-widest uppercase px-8 py-3 text-sm hover:bg-[#FFD340] transition-colors"
-          >
-            Join Now
-          </Link>
         </div>
       )}
     </>

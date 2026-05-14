@@ -1,9 +1,10 @@
 "use client";
 
 import Hero from "@/components/hero";
+import EnquiryModal from "@/components/enquiry-modal";
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -129,35 +130,13 @@ const plans = [
   },
 ];
 
-const stats = [
-  { value: "10+", label: "Years of Training" },
-  { value: "500+", label: "Members Strong" },
-  { value: "3", label: "AIBA Accredited Coaches" },
-  { value: "50+", label: "Competition Wins" },
-];
-
 export default function Home() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
-      <Hero />
-
-      {/* Stats bar */}
-      <section className="bg-[#F5B800] py-8">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 lg:divide-x lg:divide-black/20">
-            {stats.map((s, i) => (
-              <FadeIn key={i} delay={i * 0.1} className="text-center py-2">
-                <p className="font-heading text-4xl lg:text-5xl text-[#0A0A0A] leading-none">
-                  {s.value}
-                </p>
-                <p className="text-[#0A0A0A]/60 text-xs uppercase tracking-widest font-semibold mt-1">
-                  {s.label}
-                </p>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Hero onEnquire={() => setModalOpen(true)} />
+      {modalOpen && <EnquiryModal onClose={() => setModalOpen(false)} />}
 
       {/* About section */}
       <section className="py-24 lg:py-32">
@@ -229,10 +208,10 @@ export default function Home() {
                 </h2>
               </div>
               <Link
-                href="/classes"
+                href="/training"
                 className="shrink-0 text-[#F5B800] text-sm font-semibold tracking-widest uppercase hover:opacity-70 transition-opacity"
               >
-                Full Schedule &rarr;
+                View All &rarr;
               </Link>
             </div>
           </FadeIn>
@@ -281,113 +260,18 @@ export default function Home() {
             <p className="text-white/50 mb-10 text-lg">
               Come in, wrap up, and see what Boxtek is about.
             </p>
-            <Link
-              href="/contact"
+            <button
+              onClick={() => setModalOpen(true)}
               className="inline-flex items-center gap-2 bg-[#F5B800] text-[#0A0A0A] font-bold text-sm tracking-widest uppercase px-10 py-5 hover:bg-[#FFD340] transition-all duration-200"
             >
               Book Your Free Session
-            </Link>
+            </button>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* Membership pricing */}
-      <section id="pricing" className="py-24 bg-[#080808]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <FadeIn className="mb-16 text-center">
-            <span className="flex items-center justify-center gap-3 mb-6">
-              <span className="block w-8 h-px bg-[#F5B800]" />
-              <span className="text-[#F5B800] text-xs font-semibold tracking-[0.3em] uppercase">
-                Membership
-              </span>
-              <span className="block w-8 h-px bg-[#F5B800]" />
-            </span>
-            <h2 className="font-heading text-5xl lg:text-6xl text-white leading-none tracking-wide">
-              Simple, Honest Pricing
-            </h2>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {plans.map((plan, i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div
-                  className={`relative p-8 h-full flex flex-col ${
-                    plan.highlight
-                      ? "bg-[#F5B800] text-[#0A0A0A]"
-                      : "bg-[#111111] text-white border border-white/5"
-                  }`}
-                >
-                  {plan.highlight && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="bg-[#0A0A0A] text-[#F5B800] text-xs font-bold tracking-widest uppercase px-4 py-1">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-                  <h3
-                    className={`font-heading text-3xl tracking-wide mb-1 ${
-                      plan.highlight ? "text-[#0A0A0A]" : "text-white"
-                    }`}
-                  >
-                    {plan.name}
-                  </h3>
-                  <p
-                    className={`text-sm mb-6 ${
-                      plan.highlight ? "text-[#0A0A0A]/60" : "text-white/40"
-                    }`}
-                  >
-                    {plan.desc}
-                  </p>
-                  <div className="mb-8">
-                    <span className="font-heading text-6xl leading-none">
-                      {plan.price}
-                    </span>
-                    <span
-                      className={`text-sm ml-2 ${
-                        plan.highlight ? "text-[#0A0A0A]/60" : "text-white/40"
-                      }`}
-                    >
-                      {plan.per}
-                    </span>
-                  </div>
-                  <ul className="flex flex-col gap-3 mb-10 flex-1">
-                    {plan.features.map((f, j) => (
-                      <li key={j} className="flex items-center gap-3 text-sm">
-                        <Check
-                          size={14}
-                          className={
-                            plan.highlight ? "text-[#0A0A0A]" : "text-[#F5B800]"
-                          }
-                        />
-                        <span
-                          className={
-                            plan.highlight ? "text-[#0A0A0A]/80" : "text-white/60"
-                          }
-                        >
-                          {f}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href="/membership"
-                    className={`text-center font-bold text-sm tracking-widest uppercase py-4 transition-all duration-200 ${
-                      plan.highlight
-                        ? "bg-[#0A0A0A] text-[#F5B800] hover:bg-[#111111]"
-                        : "border border-[#F5B800] text-[#F5B800] hover:bg-[#F5B800] hover:text-[#0A0A0A]"
-                    }`}
-                  >
-                    {plan.cta}
-                  </Link>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Location section */}
-      <section id="schedule" className="py-24">
+      <section id="find-us" className="py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <FadeIn>
@@ -418,6 +302,15 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              <div className="mt-8">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="inline-flex items-center gap-2 bg-[#F5B800] text-[#0A0A0A] font-bold text-sm tracking-widest uppercase px-8 py-4 hover:bg-[#FFD340] transition-all duration-200"
+                >
+                  Make an Enquiry
+                </button>
+              </div>
+
               <div className="mt-10">
                 <h3 className="text-white/50 text-xs uppercase tracking-widest font-semibold mb-4">
                   Class Times

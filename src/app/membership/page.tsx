@@ -125,7 +125,6 @@ export default function MembershipPage() {
     <>
       {/* Page hero */}
       <section className="relative pt-40 pb-20 overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#F5B800]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <FadeIn>
             <span className="flex items-center gap-3 mb-6">
