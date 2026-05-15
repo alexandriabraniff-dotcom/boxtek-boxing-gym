@@ -16,7 +16,6 @@ import {
   Heart,
   MapPin,
   Phone,
-  Check,
 } from "lucide-react";
 
 function FadeIn({
@@ -147,7 +146,7 @@ export default function Home() {
                 <div className="absolute -top-4 -left-4 w-24 h-24 border border-[#F5B800]/30" />
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[#F5B800]/30" />
                 <Image
-                  src="https://images.unsplash.com/photo-1517438476312-10d79c077509?w=800&q=80"
+                  src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&q=80"
                   alt="Boxing training at Boxtek"
                   width={600}
                   height={750}
@@ -216,23 +215,16 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
             {classes.map((cls, i) => (
-              <FadeIn key={i} delay={i * 0.08}>
-                <div className="bg-[#111111] border border-white/5 p-8 hover:border-[#F5B800]/30 transition-all duration-300 group h-full">
-                  <div className="flex items-start justify-between mb-6">
-                    <cls.icon
-                      size={28}
-                      className="text-[#F5B800] group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <span className="text-[10px] text-[#F5B800]/70 font-semibold uppercase tracking-widest border border-[#F5B800]/20 px-2 py-1">
-                      {cls.tag}
-                    </span>
-                  </div>
-                  <h3 className="font-heading text-2xl text-white tracking-wide mb-3">
+              <FadeIn key={i} delay={i * 0.06}>
+                <div className="bg-[#0A0A0A] p-8 hover:bg-[#111111] transition-colors duration-200 group h-full flex items-center justify-between">
+                  <h3 className="font-heading text-2xl text-white tracking-wide group-hover:text-[#F5B800] transition-colors duration-200">
                     {cls.title}
                   </h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{cls.desc}</p>
+                  <span className="text-[10px] text-[#F5B800]/60 font-semibold uppercase tracking-widest border border-[#F5B800]/20 px-2 py-1 shrink-0 ml-4">
+                    {cls.tag}
+                  </span>
                 </div>
               </FadeIn>
             ))}

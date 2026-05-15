@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
 import Image from "next/image";
-import { Target, Users, Award, Flame, ShieldCheck, Heart } from "lucide-react";
 
 
 function FadeIn({
@@ -32,38 +31,6 @@ function FadeIn({
 }
 
 
-const values = [
-  {
-    icon: Target,
-    title: "Discipline",
-    desc: "Boxing demands consistency, focus, and mental fortitude. We build habits that carry beyond the gym and into everyday life.",
-  },
-  {
-    icon: Users,
-    title: "Community",
-    desc: "From your first class to your first fight, you train alongside people who push you, support you, and have your back.",
-  },
-  {
-    icon: Award,
-    title: "Excellence",
-    desc: "AIBA-accredited coaching means every technique is taught correctly, every single time. We don't cut corners.",
-  },
-  {
-    icon: Flame,
-    title: "Passion",
-    desc: "We love boxing. That passion shows in how we coach, how we train, and the energy we bring to every session.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Respect",
-    desc: "In the ring and out of it, respect is non-negotiable. Every member, every coach, every visitor is treated with dignity.",
-  },
-  {
-    icon: Heart,
-    title: "Inclusion",
-    desc: "Beginners, seasoned fighters, kids, adults. Boxtek is for everyone who shows up ready to work.",
-  },
-];
 
 export default function AboutPage() {
   return (
@@ -193,41 +160,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── SECTION 3: Our Values ── */}
-      <section className="py-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <FadeIn className="mb-16">
-            <span className="flex items-center gap-3 mb-6">
-              <span className="block w-8 h-px bg-[#F5B800]" />
-              <span className="text-[#F5B800] text-xs font-semibold tracking-[0.3em] uppercase">
-                What We Stand For
-              </span>
-            </span>
-            <h2 className="font-heading text-5xl lg:text-6xl text-white leading-none tracking-wide">
-              Our Values
-            </h2>
-            <p className="text-white/40 text-sm mt-4 max-w-lg leading-relaxed">
-              These aren&apos;t words on a wall. They&apos;re the principles that shape how we coach, how we train, and how we treat each other.
-            </p>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {values.map((v, i) => (
-              <FadeIn key={i} delay={i * 0.07}>
-                <div className="bg-[#111111] border border-white/5 p-8 hover:border-[#F5B800]/30 transition-all duration-300 group h-full">
-                  <div className="w-12 h-12 bg-[#F5B800]/10 flex items-center justify-center mb-6 group-hover:bg-[#F5B800]/20 transition-colors">
-                    <v.icon size={22} className="text-[#F5B800]" />
-                  </div>
-                  <h3 className="font-heading text-2xl text-white tracking-wide mb-3">
-                    {v.title}
-                  </h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{v.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }

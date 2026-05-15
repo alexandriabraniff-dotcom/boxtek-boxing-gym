@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useInView } from "motion/react";
-import { useRef } from "react";
-import { Swords, Dumbbell, Users, Shield, Trophy, Heart, Clock, Star } from "lucide-react";
+import { useRef, useState } from "react";
+import { Swords, Dumbbell, Users, Shield, Trophy, Heart, Clock, Plus, Minus } from "lucide-react";
 import Link from "next/link";
 
 function FadeIn({
@@ -33,61 +33,65 @@ function FadeIn({
 const classes = [
   {
     icon: Swords,
+    number: "01",
     title: "Boxing Fundamentals",
     level: "All Levels",
     duration: "60 min",
     times: "Mon, Wed, Fri — 6:00am & 6:00pm",
     desc: "The foundation of everything. Learn stance, guard, footwork, jabs, crosses, hooks, and uppercuts. Delivered in a structured, progressive format so you build correctly from day one.",
-    color: "#F5B800",
   },
   {
     icon: Dumbbell,
+    number: "02",
     title: "Strength & Conditioning",
     level: "All Levels",
     duration: "45 min",
     times: "Tue, Thu — 9:00am & 6:00pm",
     desc: "Boxing-specific fitness training. Expect bag work, circuit training, skipping, and functional strength exercises. Build the engine you need to last every round.",
-    color: "#F5B800",
   },
   {
     icon: Users,
+    number: "03",
     title: "Sparring Sessions",
     level: "Intermediate+",
     duration: "90 min",
     times: "Sat — 8:00am",
     desc: "Supervised technical sparring with matched partners. Work your combinations, timing, and ring craft in a safe, structured environment under coach supervision.",
-    color: "#F5B800",
   },
   {
     icon: Shield,
+    number: "04",
     title: "Defensive Boxing",
     level: "All Levels",
     duration: "60 min",
     times: "Wed — 7:30pm",
     desc: "Master the art of not getting hit. Deep-dive into slipping, rolling, blocking, and parrying. The more you learn to defend, the harder you become to beat.",
-    color: "#F5B800",
   },
   {
     icon: Trophy,
+    number: "05",
     title: "Competition Prep",
     level: "Advanced",
     duration: "120 min",
     times: "By invitation — Tue, Thu, Sat",
     desc: "A dedicated program for licensed amateur and competitive fighters. Periodised training cycles aligned to your fight calendar, managed by our accredited coaching team.",
-    color: "#F5B800",
   },
   {
     icon: Heart,
+    number: "06",
     title: "Fitness Boxing",
     level: "Beginner",
     duration: "45 min",
     times: "Mon, Wed, Fri — 9:00am",
     desc: "Get fit without the fight. This non-contact class uses boxing drills and bag work to deliver a full-body workout. No experience needed, just a willingness to work hard.",
-    color: "#F5B800",
   },
 ];
 
 export default function ClassesPage() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
+
   return (
     <>
       {/* Page hero */}
@@ -110,56 +114,86 @@ export default function ClassesPage() {
         </div>
       </section>
 
-      {/* Classes grid */}
+      {/* Classes accordion */}
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex flex-col gap-4">
-            {classes.map((cls, i) => (
-              <FadeIn key={i} delay={i * 0.06}>
-                <div className="bg-[#111111] border border-white/5 hover:border-[#F5B800]/30 transition-all duration-300 group">
-                  <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-6 p-8 items-center">
-                    {/* Icon + title */}
-                    <div className="flex items-center gap-6">
-                      <div className="w-14 h-14 bg-[#F5B800]/10 flex items-center justify-center shrink-0 group-hover:bg-[#F5B800]/20 transition-colors">
-                        <cls.icon size={24} className="text-[#F5B800]" />
+          <div className="divide-y divide-white/5 border-y border-white/5">
+            {classes.map((cls, i) => {
+              const isOpen = openIndex === i;
+              return (
+                <FadeIn key={i} delay={i * 0.05}>
+                  <div>
+                    <button
+                      onClick={() => toggle(i)}
+                      className="w-full text-left py-7 flex items-center gap-6 group cursor-pointer"
+                    >
+                      {/* Number */}
+                      <span className="font-heading text-sm text-[#F5B800]/40 tracking-widest shrink-0 w-8">
+                        {cls.number}
+                      </span>
+
+                      {/* Icon */}
+                      <div className={`w-10 h-10 flex items-center justify-center shrink-0 transition-colors duration-200 ${isOpen ? "bg-[#F5B800]/20" : "bg-[#F5B800]/10 group-hover:bg-[#F5B800]/20"}`}>
+                        <cls.icon size={18} className="text-[#F5B800]" />
                       </div>
-                      <div>
-                        <h3 className="font-heading text-2xl lg:text-3xl text-white tracking-wide">
+
+                      {/* Title */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-heading text-2xl lg:text-3xl tracking-wide transition-colors duration-200 ${isOpen ? "text-[#F5B800]" : "text-white group-hover:text-[#F5B800]"}`}>
                           {cls.title}
                         </h3>
-                        <div className="flex items-center gap-3 mt-1">
-                          <span className="flex items-center gap-1.5 text-white/40 text-xs">
-                            <Star size={10} className="text-[#F5B800]" />
-                            {cls.level}
-                          </span>
-                          <span className="text-white/20">|</span>
-                          <span className="flex items-center gap-1.5 text-white/40 text-xs">
-                            <Clock size={10} />
-                            {cls.duration}
-                          </span>
-                        </div>
                       </div>
-                    </div>
 
-                    {/* Description */}
-                    <div className="lg:px-8">
-                      <p className="text-white/50 text-sm leading-relaxed mb-2">{cls.desc}</p>
-                      <p className="text-[#F5B800]/70 text-xs font-medium">{cls.times}</p>
-                    </div>
+                      {/* Level + Duration */}
+                      <div className="hidden sm:flex items-center gap-6 shrink-0">
+                        <span className="text-[10px] text-[#F5B800]/60 font-semibold uppercase tracking-widest border border-[#F5B800]/20 px-2 py-1">
+                          {cls.level}
+                        </span>
+                        <span className="flex items-center gap-1.5 text-white/30 text-xs">
+                          <Clock size={11} />
+                          {cls.duration}
+                        </span>
+                      </div>
 
-                    {/* CTA */}
-                    <div className="shrink-0">
-                      <Link
-                        href="/contact"
-                        className="inline-block border border-[#F5B800]/40 text-[#F5B800] text-xs font-bold tracking-widest uppercase px-6 py-3 hover:bg-[#F5B800] hover:text-[#0A0A0A] transition-all duration-200 whitespace-nowrap"
-                      >
-                        Book Class
-                      </Link>
-                    </div>
+                      {/* Toggle icon */}
+                      <div className={`w-8 h-8 border flex items-center justify-center shrink-0 transition-all duration-200 ${isOpen ? "border-[#F5B800] bg-[#F5B800] text-[#0A0A0A]" : "border-white/10 text-white/40 group-hover:border-[#F5B800]/40 group-hover:text-[#F5B800]"}`}>
+                        {isOpen ? <Minus size={14} /> : <Plus size={14} />}
+                      </div>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="content"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pb-8 pl-14 lg:pl-24 pr-0 lg:pr-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+                            <div>
+                              <p className="text-white/55 text-sm leading-relaxed mb-4">
+                                {cls.desc}
+                              </p>
+                              <p className="text-[#F5B800]/70 text-xs font-medium uppercase tracking-wider">
+                                {cls.times}
+                              </p>
+                            </div>
+                            <Link
+                              href="/contact"
+                              className="inline-block border border-[#F5B800] text-[#F5B800] text-xs font-bold tracking-widest uppercase px-8 py-3 hover:bg-[#F5B800] hover:text-[#0A0A0A] transition-all duration-200 whitespace-nowrap shrink-0"
+                            >
+                              Book This Class
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                </div>
-              </FadeIn>
-            ))}
+                </FadeIn>
+              );
+            })}
           </div>
         </div>
       </section>
